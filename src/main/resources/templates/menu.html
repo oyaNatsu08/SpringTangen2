@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>システム画面</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="/css/base.css" rel="stylesheet" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+</head>
+
+<body>
+    <th:block th:insert="common/header"></th:block>
+
+    <div id="app">
+
+        <div v-if="menuView">
+
+            <p>
+                <button type="submit" class="btn btn-primary" @click="addViewSet">新規登録</button>
+            </p>
+
+            <div>
+                <p>
+                    <input type="text" placeholder="キーワード検索" v-model="search">
+                    <button type="submit" class="btn btn-primary" v-bind:value="search"
+                        @click="find(search)">検索</button>
+                </p>
+            </div>
+
+            <p>検索結果： {{ count }} 件</p>
+
+            <table>
+
+                <tr>
+                    <th>商品ID</th>
+                    <th>商品名</th>
+                    <th>単価</th>
+                    <th>カテゴリ</th>
+                    <th>詳細</th>
+                </tr>
+
+
+                <tr v-for="product in products">
+                    <td> {{ product.id }}</td>
+                    <td> {{ product.name }}</td>
+                    <td> {{ product.price }}</td>
+                    <td> {{ product.category }}</td>
+                    <td><button type="button" class="btn btn-primary">詳細</button></td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div v-if="addView">
+
+            <p>登録情報を入力してください（<span class="red">※</span>は必須です）</p>
+
+            <p>
+                <span class="red">※</span>商品ID
+                <input v-model="productId">
+            </p>
+
+            <p>
+                <span class="red">※</span>商品名
+                <input v-model="productName">
+            </p>
+
+            <p>
+                <span class="red">※</span>単価
+                <input type="number" v-model="price">
+            </p>
+
+            <p>
+                <span class="red">※</span>カテゴリ
+                <select v-model="category">
+
+                    <option v-for="category in categoryList">
+                        {{ category.name }}
+                    </option>
+
+                </select>
+            </p>
+
+            <p>
+                商品説明
+                <input type="textarea" v-model="description">
+            </p>
+
+            <p>
+                画像
+                <input type="file">
+            </p>
+
+            <button type="button" class="btn btn-primary" @click="addProduct">登録</button>
+            <button type="button" class="btn btn-primary" @click="addBack">戻る</button>
+
+        </div>
+
+    </div>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
