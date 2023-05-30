@@ -4,9 +4,8 @@ import com.example.springwebtask.entity.CategoryRecord;
 import com.example.springwebtask.entity.ProductRecord;
 import com.example.springwebtask.service.ManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +28,12 @@ public class ManagementRestController {
     @GetMapping("/api/category-list")
     public List<CategoryRecord> findCategories() {
         return mgmtService.findCategories();
+    }
+
+    @PostMapping("/api/product")
+    public void add(@RequestBody() @Validated ProductRecord productAddRecord) {
+        //System.out.println("SUCCESS" + productAddRecord.imgPath());
+        mgmtService.insert(productAddRecord);
     }
 
 }

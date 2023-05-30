@@ -54,7 +54,11 @@ public class ManagementController {
     }
 
     @GetMapping("/menu")
-    public String top() {
-        return "/menu";
+    public String top(@ModelAttribute("loginForm") LoginForm loginForm) {
+        if (session.getAttribute("name") == null) {
+            return "login";
+        } else {
+            return "/menu";
+        }
     }
 }

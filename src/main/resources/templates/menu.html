@@ -44,11 +44,11 @@
 
 
                 <tr v-for="product in products">
-                    <td> {{ product.id }}</td>
+                    <td> {{ product.productId }}</td>
                     <td> {{ product.name }}</td>
                     <td> {{ product.price }}</td>
                     <td> {{ product.category }}</td>
-                    <td><button type="button" class="btn btn-primary">詳細</button></td>
+                    <td><button type="button" class="btn btn-primary" @click="detailViewSet">詳細</button></td>
                 </tr>
 
             </table>
@@ -58,45 +58,61 @@
         <div v-if="addView">
 
             <p>登録情報を入力してください（<span class="red">※</span>は必須です）</p>
+            
+            <p class="red">{{ addError }}</p>
 
             <p>
                 <span class="red">※</span>商品ID
-                <input v-model="productId">
+                <input v-model="productId"><br>
+                <span class="red">{{ idError }}</span>
             </p>
 
             <p>
                 <span class="red">※</span>商品名
-                <input v-model="productName">
+                <input v-model="productName"><br>
+                <span class="red">{{ nameError }}</span>
             </p>
 
             <p>
                 <span class="red">※</span>単価
-                <input type="number" v-model="price">
+                <input type="number" v-model="price"><br>
+                <span class="red">{{ priceError }}</span>
             </p>
 
             <p>
                 <span class="red">※</span>カテゴリ
                 <select v-model="category">
 
-                    <option v-for="category in categoryList">
-                        {{ category.name }}
+                    <option v-for="cg in categoryList">
+                        {{ cg.name }}
                     </option>
 
                 </select>
+                <span class="red">{{ categoryError }}</span>
             </p>
 
             <p>
                 商品説明
                 <input type="textarea" v-model="description">
+                <span class="red">{{ descriptionError }}</span>
             </p>
 
             <p>
                 画像
-                <input type="file">
+                <input type="file" @change="imagePath">
+                <span class="red">{{ imgError }}</span>
             </p>
 
-            <button type="button" class="btn btn-primary" @click="addProduct">登録</button>
-            <button type="button" class="btn btn-primary" @click="addBack">戻る</button>
+            <p>
+                <button type="button" class="btn btn-primary" @click="addProduct">登録</button>
+                <button type="button" class="btn btn-primary" @click="addBack">戻る</button>
+            </p>
+
+            <p>{{ text }}</p>
+
+        </div>
+
+        <div v-if="detailView">
 
         </div>
 

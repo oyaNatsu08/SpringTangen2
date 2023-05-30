@@ -16,4 +16,6 @@ public interface ManagementDao {
 
     List<CategoryRecord> findCategories();
 
+    int insert(ProductRecord productAddRecord);
+
 }

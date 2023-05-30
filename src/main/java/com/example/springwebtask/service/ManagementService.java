@@ -16,4 +16,6 @@ public interface ManagementService {
 
     List<CategoryRecord> findCategories();
 
+    int insert(ProductRecord productAddRecord);
+
 }

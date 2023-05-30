@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
 @Repository
@@ -29,7 +28,8 @@ public class MgmtDao implements ManagementDao {
 
     @Override
     public List<ProductRecord> findAll() {
-        var list = jdbcTemplate.query("SELECT p.product_id AS id, p.name, p.price, c.name AS category FROM products AS p " +
+        var list = jdbcTemplate.query("SELECT p.id, p.product_id AS productId, c.name AS category, p.name, p.price, " +
+                        "p.image_path AS imgPath, p.description, p.created_rd, p.created_ud FROM products AS p " +
                         "LEFT OUTER JOIN categories AS c ON p.category_id = c.id",
                 new DataClassRowMapper<>(ProductRecord.class));
         return list;
@@ -47,7 +47,28 @@ public class MgmtDao implements ManagementDao {
 
     @Override
     public List<CategoryRecord> findCategories() {
-        return jdbcTemplate.query("SELECT id, name FROM categories", new DataClassRowMapper<>(CategoryRecord.class));
+        return jdbcTemplate.query("SELECT id, name, created_rd, created_ud FROM categories", new DataClassRowMapper<>(CategoryRecord.class));
     }
 
+    @Override
+    public int insert(ProductRecord productAddRecord) {
+        //category_idを受け取る
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        param.addValue("category", productAddRecord.category());
+
+        Integer categoryId = jdbcTemplate.queryForObject("SELECT id FROM categories WHERE name = :category", param, Integer.class);
+        //System.out.println(categoryId);
+
+        param = new MapSqlParameterSource();
+        param.addValue("id", productAddRecord.productId());
+        param.addValue("name", productAddRecord.name());
+        param.addValue("categoryId", categoryId);
+        param.addValue("price", productAddRecord.price());
+        param.addValue("description", productAddRecord.description());
+        param.addValue("img", productAddRecord.imgPath());
+
+        return jdbcTemplate.update("INSERT INTO products(product_id, category_id, name, price, image_path, description, created_rd, created_ud)" +
+                "VALUES(:id, :categoryId, :name, :price, :img, :description, now(), now())", param);
+
+    }
 }

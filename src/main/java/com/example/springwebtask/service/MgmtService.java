@@ -35,4 +35,6 @@ public class MgmtService implements ManagementService {
         return mgmtDao.findCategories();
     }
 
+   @Override
+   public int insert(ProductRecord productAddRecord) { return mgmtDao.insert(productAddRecord); }
 }
