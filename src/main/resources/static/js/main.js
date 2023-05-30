@@ -17,12 +17,13 @@ createApp({
             category: '',
             imgPath: '',
             text: '',
-            addError: '',
-            idError: '',
-            nameError: '',
-            priceError: '',
-            categoryError: '',
-            imgError: '',
+            // addError: '',
+            // idError: '',
+            // nameError: '',
+            // priceError: '',
+            // categoryError: '',
+            // descriptionError: '',
+            // imgError: '',
         }
     },
     methods: {
@@ -57,7 +58,7 @@ createApp({
         },
         addProduct() {
             const judge = window.confirm('登録しますか？');
-            if (judge && this.formValidate()) {
+            if (judge) {
                 axios.post('/api/product', {
                     // addList: {
                     id: null,
@@ -73,13 +74,13 @@ createApp({
                 })
                     .then(res => {
                         this.text = '登録が完了しました';
-                        this.productId = '';
-                        this.productName = '';
-                        this.price = '';
-                        this.description = '';
-                        this.category = '';
-                        this.descriptionError = '';
-                        this.imgPath = '';
+                        // this.productId = '';
+                        // this.productName = '';
+                        // this.price = '';
+                        // this.description = '';
+                        // this.category = '';
+                        // this.descriptionError = '';
+                        // this.imgPath = '';
                     })
                     .catch(error => {
                         console.error(error);
@@ -136,9 +137,9 @@ createApp({
                 this.idError += '  商品IDは1～255文字で入力してください';
             }
 
-            if (!'^\d{7}$/'.test(this.price)) {
-                this.priceError += '桁が大きすぎます';
-            }
+            // if (!'^\d{7}$/'.test(this.price)) {
+            //     this.priceError += '桁が大きすぎます';
+            // }
 
             if (this.productId.length > 2000) {
                 this.descriptionError += '  商品詳細は2000文字以内で入力してください';

@@ -6,20 +6,20 @@ public class Product {
     String category;
     String name;
     Integer price;
-    String imgPath;
+    String imagePath;
     String description;
     String createdRd;
     String createdUd;
 
     public Product(Integer id, String productId, String category,
-                   String name, Integer price, String imgPath, String description,
+                   String name, Integer price, String imagePath, String description,
                    String createdRd, String createdUd) {
         this.id = id;
         this.productId = productId;
         this.category = category;
         this.name = name;
         this.price = price;
-        this.imgPath = imgPath;
+        this.imagePath = imagePath;
         this.description = description;
         this.createdRd = createdRd;
         this.createdUd = createdUd;
@@ -65,12 +65,12 @@ public class Product {
         this.price = price;
     }
 
-    public String getImgPath() {
-        return imgPath;
+    public String getimagePath() {
+        return imagePath;
     }
 
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+    public void setimagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getDescription() {

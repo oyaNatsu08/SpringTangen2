@@ -1,6 +1,7 @@
 package com.example.springwebtask.service;
 
 import com.example.springwebtask.entity.CategoryRecord;
+import com.example.springwebtask.entity.Product;
 import com.example.springwebtask.entity.ProductRecord;
 import com.example.springwebtask.entity.UsersRecord;
 
@@ -10,12 +11,12 @@ public interface ManagementService {
 
     UsersRecord findById(String id);
 
-    List<ProductRecord> findAll();
+    List<Product> findAll();
 
-    List<ProductRecord> findByName(String name);
+    List<Product> findByName(String name);
 
     List<CategoryRecord> findCategories();
 
-    int insert(ProductRecord productAddRecord);
+    int insert(Product productAdd);
 
 }

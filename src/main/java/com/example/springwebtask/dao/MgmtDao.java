@@ -1,6 +1,7 @@
 package com.example.springwebtask.dao;
 
 import com.example.springwebtask.entity.CategoryRecord;
+import com.example.springwebtask.entity.Product;
 import com.example.springwebtask.entity.ProductRecord;
 import com.example.springwebtask.entity.UsersRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,22 @@ public class MgmtDao implements ManagementDao {
     }
 
     @Override
-    public List<ProductRecord> findAll() {
+    public List<Product> findAll() {
         var list = jdbcTemplate.query("SELECT p.id, p.product_id AS productId, c.name AS category, p.name, p.price, " +
-                        "p.image_path AS imgPath, p.description, p.created_rd, p.created_ud FROM products AS p " +
+                        "p.image_path, p.description, p.created_rd, p.created_ud FROM products AS p " +
                         "LEFT OUTER JOIN categories AS c ON p.category_id = c.id",
-                new DataClassRowMapper<>(ProductRecord.class));
+                new DataClassRowMapper<>(Product.class));
         return list;
     }
 
     @Override
-    public List<ProductRecord> findByName(String name) {
+    public List<Product> findByName(String name) {
         MapSqlParameterSource param = new MapSqlParameterSource();
         param.addValue("name", "%" + name + "%");
-        var list = jdbcTemplate.query("SELECT p.product_id AS id, p.name, p.price, c.name AS category FROM products AS p " +
+        var list = jdbcTemplate.query("SELECT p.id, p.product_id AS productId, p.name, p.price, c.name AS category," +
+                        "p.image_path, p.description, p.created_rd, p.created_ud FROM products AS p " +
                 "LEFT OUTER JOIN categories AS c ON p.category_id = c.id WHERE p.name LIKE :name", param,
-                new DataClassRowMapper<>(ProductRecord.class));
+                new DataClassRowMapper<>(Product.class));
         return list;
     }
 
@@ -51,21 +53,21 @@ public class MgmtDao implements ManagementDao {
     }
 
     @Override
-    public int insert(ProductRecord productAddRecord) {
+    public int insert(Product productAdd) {
         //category_idを受け取る
         MapSqlParameterSource param = new MapSqlParameterSource();
-        param.addValue("category", productAddRecord.category());
+        param.addValue("category", productAdd.getCategory());
 
         Integer categoryId = jdbcTemplate.queryForObject("SELECT id FROM categories WHERE name = :category", param, Integer.class);
         //System.out.println(categoryId);
 
         param = new MapSqlParameterSource();
-        param.addValue("id", productAddRecord.productId());
-        param.addValue("name", productAddRecord.name());
+        param.addValue("id", productAdd.getProductId());
+        param.addValue("name", productAdd.getName());
         param.addValue("categoryId", categoryId);
-        param.addValue("price", productAddRecord.price());
-        param.addValue("description", productAddRecord.description());
-        param.addValue("img", productAddRecord.imgPath());
+        param.addValue("price", productAdd.getPrice());
+        param.addValue("description", productAdd.getDescription());
+        param.addValue("img", productAdd.getimagePath());
 
         return jdbcTemplate.update("INSERT INTO products(product_id, category_id, name, price, image_path, description, created_rd, created_ud)" +
                 "VALUES(:id, :categoryId, :name, :price, :img, :description, now(), now())", param);

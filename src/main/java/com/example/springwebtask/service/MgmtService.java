@@ -2,6 +2,7 @@ package com.example.springwebtask.service;
 
 import com.example.springwebtask.dao.ManagementDao;
 import com.example.springwebtask.entity.CategoryRecord;
+import com.example.springwebtask.entity.Product;
 import com.example.springwebtask.entity.ProductRecord;
 import com.example.springwebtask.entity.UsersRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,12 @@ public class MgmtService implements ManagementService {
     }
 
     @Override
-    public List<ProductRecord> findAll() {
+    public List<Product> findAll() {
         return mgmtDao.findAll();
     }
 
     @Override
-    public List<ProductRecord> findByName(String name) {
+    public List<Product> findByName(String name) {
         return mgmtDao.findByName(name);
     }
 
@@ -36,5 +37,5 @@ public class MgmtService implements ManagementService {
     }
 
    @Override
-   public int insert(ProductRecord productAddRecord) { return mgmtDao.insert(productAddRecord); }
+   public int insert(Product productAdd) { return mgmtDao.insert(productAdd); }
 }
