@@ -13,17 +13,13 @@
 
 table {
     border-collapse: collapse;
-    /* セルの境界線を結合して1本の線にする */
     border: 1px solid black;
-    /* テーブル全体の枠線を追加 */
 }
 
 th,
 td {
     border: 1px solid black;
-    /* セルの枠線を追加 */
     padding: 8px;
-    /* セルの内側の余白を設定（任意の値に変更可能） */
 }
 
 .red {
@@ -58,4 +54,75 @@ td {
 .margin {
     margin-left: 10%;
     margin-right: 10%;
+}
+
+table {
+    margin: auto;
+    width: 90%;
+    border: none;
+    table-layout: fixed;
+}
+
+table th {
+    background: #68a9eb;
+    font-weight: bold;
+    color: #fff;
+}
+
+table tr:nth-child(odd) {
+    background: #F7EFE3;
+}
+
+.search-container {
+    box-sizing: border-box;
+    position: relative;
+    border: 1px solid #999;
+    padding: 3px 10px;
+    border-radius: 20px;
+    height: 2.3em;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.search-container input[type="text"] {
+    border: none;
+}
+
+.search-container input[type="text"]:focus {
+    outline: 0;
+}
+
+.search-container input[type="submit"] {
+    cursor: pointer;
+    font-family: FontAwesome;
+    font-size: 1.3em;
+    border: none;
+    background: none;
+    color: #3879D9;
+    position: absolute;
+    width: 2.5em;
+    height: 2.5em;
+    right: 0;
+    top: -10px;
+    outline: none;
+}
+
+.form-body {
+    width: 70%;
+    margin: auto;
+}
+
+.base-text {
+    width: 50%;
+}
+
+.basic-btn {
+    margin: 10px;
+}
+
+.margin-text {
+    margin-right: 20%;
 }
