@@ -1,8 +1,10 @@
 <header>
-  <h1><a th:href="@{menu}" class="a-tag">商品管理システム</a></h1>
-  <p th:text="#{menu.welcome(${session.name})}"></p>
-  <form action="logout" method="get">
-    <button type="submit" th:text="ログアウト"></button>
-  </form>
+  <div class="d-flex bd-highlight mb-3">
+    <h1 class="me-auto p-2 bd-highlight"><a th:href="@{menu}" class="a-tag">商品管理システム</a></h1>
+    <p class="p-2 bd-highlight" th:text="#{menu.welcome(${session.name})}"></p>
+    <form action="logout" method="get">
+      <button class="p-2 bd-highlight btn btn-outline-primary" type="submit" th:text="ログアウト"></button>
+    </form>
+  </div>
   <hr>
 </header>

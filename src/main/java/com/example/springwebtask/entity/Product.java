@@ -1,14 +1,38 @@
 package com.example.springwebtask.entity;
 
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+@Data
 public class Product {
     Integer id;
+
+    @NotEmpty(message = "商品IDは必須です")
+    @Length(min=1, max=20)
     String productId;
+
+    @NotEmpty(message = "カテゴリ名は必須です")
     String category;
+
+    @NotEmpty(message = "商品名は必須です")
+    @Length(min=1, max=255)
     String name;
+
+    @NotNull(message = "単価は必須です")
+    @Digits(integer = 7, fraction = 0)
     Integer price;
+
+//    @NotEmpty(message = "画像は必須です")
     String imagePath;
+
+    @Length(max=2000)
     String description;
+
     String createdRd;
+
     String createdUd;
 
     public Product(Integer id, String productId, String category,

@@ -32,10 +32,22 @@ public class MgmtService implements ManagementService {
     }
 
     @Override
+    public Product findByProduct(String id) { return mgmtDao.findByProduct(id);}
+
+    @Override
     public List<CategoryRecord> findCategories() {
         return mgmtDao.findCategories();
     }
 
-   @Override
-   public int insert(Product productAdd) { return mgmtDao.insert(productAdd); }
+    @Override
+    public int insert(Product productAdd) { return mgmtDao.insert(productAdd); }
+
+    @Override
+    public int update(Product productUpdate) { return mgmtDao.update(productUpdate); }
+
+    @Override
+    public Product findByProduct(Integer id, String productId) { return  mgmtDao.findByProduct(id, productId); }
+
+    @Override
+    public int delete(String productId) { return mgmtDao.delete(productId); }
 }

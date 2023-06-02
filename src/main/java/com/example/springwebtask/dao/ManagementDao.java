@@ -15,8 +15,16 @@ public interface ManagementDao {
 
     List<Product> findByName(String name);
 
+    Product findByProduct(String id);
+
     List<CategoryRecord> findCategories();
 
     int insert(Product productAdd);
+
+    int update(Product productUpdate);
+
+    Product findByProduct(Integer id, String productId);
+
+    int delete(String productId);
 
 }

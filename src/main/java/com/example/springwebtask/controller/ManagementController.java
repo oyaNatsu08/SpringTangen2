@@ -34,13 +34,15 @@ public class ManagementController {
             return "/login";
         } else {
             UsersRecord user = mgmtService.findById(loginForm.getId());
+            //System.out.println(user);
 
             //ログインチェック
-            if (user == null) {
+            if (user == null || (!loginForm.getPass().equals(user.password()))) { //loginForm.getId().equals(user.id()) && loginForm.getPass().equals(user.password())
                 model.addAttribute("error", "IDまたはパスワードが不正です");
                 return "/login";
             } else {
                 session.setAttribute("name", user.name());
+                session.setAttribute("role", user.role());
                 return "/menu";
             }
 
@@ -50,7 +52,7 @@ public class ManagementController {
     @GetMapping("/logout")
     public String logout(@ModelAttribute("loginForm") LoginForm loginForm) {
         session.invalidate(); // セッションを無効化する
-        return "/login";
+        return "/logout";
     }
 
     @GetMapping("/menu")

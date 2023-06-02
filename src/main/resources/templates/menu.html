@@ -18,9 +18,11 @@
 
         <div v-if="menuView">
 
-            <p>
+            <p th:if="${session.role} == 1">
                 <button type="submit" class="btn btn-primary" @click="addViewSet">新規登録</button>
             </p>
+
+            <p class="red"> {{ text }} </p>
 
             <div>
                 <p>
@@ -48,7 +50,7 @@
                     <td> {{ product.name }}</td>
                     <td> {{ product.price }}</td>
                     <td> {{ product.category }}</td>
-                    <td><button type="button" class="btn btn-primary" @click="detailViewSet">詳細</button></td>
+                    <td><button type="button" class="btn btn-primary" @click="detailViewSet(product)">詳細</button></td>
                 </tr>
 
             </table>
@@ -58,25 +60,28 @@
         <div v-if="addView">
 
             <p>登録情報を入力してください（<span class="red">※</span>は必須です）</p>
-            
-            <p class="red">{{ addError }}</p>
+
+            <p class="red" v-for="error in Error">
+                {{ error }}
+            </p>
+            <p class="red">{{ imgError }}</p>
 
             <p>
                 <span class="red">※</span>商品ID
                 <input v-model="productId"><br>
-                <span class="red">{{ idError }}</span>
+                <!-- <span class="red">{{ idError }}</span> -->
             </p>
 
             <p>
                 <span class="red">※</span>商品名
                 <input v-model="productName"><br>
-                <span class="red">{{ nameError }}</span>
+                <!-- <span class="red">{{ nameError }}</span> -->
             </p>
 
             <p>
                 <span class="red">※</span>単価
                 <input type="number" v-model="price"><br>
-                <span class="red">{{ priceError }}</span>
+                <!-- <span class="red">{{ priceError }}</span> -->
             </p>
 
             <p>
@@ -88,31 +93,93 @@
                     </option>
 
                 </select>
-                <span class="red">{{ categoryError }}</span>
+                <!-- <span class="red">{{ categoryError }}</span> -->
             </p>
 
             <p>
                 商品説明
                 <input type="textarea" v-model="description">
-                <span class="red">{{ descriptionError }}</span>
+                <!-- <span class="red">{{ descriptionError }}</span> -->
             </p>
 
             <p>
                 画像
-                <input type="file" @change="imagePath">
-                <span class="red">{{ imgError }}</span>
+                <input type="file" @change="setImage">
+                <!-- <span class="red">{{ imgError }}</span> -->
             </p>
 
             <p>
                 <button type="button" class="btn btn-primary" @click="addProduct">登録</button>
-                <button type="button" class="btn btn-primary" @click="addBack">戻る</button>
+                <button type="button" class="btn btn-primary" @click="back">戻る</button>
             </p>
 
-            <p>{{ text }}</p>
+            <!-- <p><B>{{ text }}</B></p> -->
 
         </div>
 
         <div v-if="detailView">
+            <p><img :src="imgPath"></p>
+            <p><span>商品ID</span><input v-bind:value="productId" disabled></p>
+            <p><span>商品名</span><input v-bind:value="productName" disabled></p>
+            <p><span>単価</span><input v-bind:value="price" disabled></p>
+            <p><span>カテゴリ</span><input v-bind:value="category" disabled></p>
+            <p><span>商品説明</span><input v-bind:value="description" disabled></p>
+            <p>
+                <button th:if="${session.role} == 1" type="button" class="btn btn-primary" @click="deleteViewSet(productId)">削除</button>
+                <button th:if="${session.role} == 1" type="button" class="btn btn-primary" @click="updateViewSet">編集</button>
+                <button type="button" class="btn btn-primary" @click="back">戻る</button>
+            </p>
+        </div>
+
+        <div v-if="updateView">
+
+            <p class="red" v-for="error in Error">
+                {{ error }}
+            </p>
+            <p class="red">{{ imgError }}</p>
+
+            <p>
+                商品ID
+                <input v-model="productId"><br>
+            </p>
+
+            <p>
+                商品名
+                <input v-model="productName"><br>
+            </p>
+
+            <p>
+                単価
+                <input type="number" v-model="price"><br>
+            </p>
+
+            <p>
+                カテゴリ
+                <select v-model="category">
+
+                    <option v-for="cg in categoryList">
+                        {{ cg.name }}
+                    </option>
+
+                </select>
+            </p>
+
+            <p>
+                商品説明
+                <input type="textarea" v-model="description">
+            </p>
+
+            <p>
+                画像
+                <input type="file" @change="setImage">
+            </p>
+
+            <p>
+                <button type="button" class="btn btn-primary" @click="updateProduct">更新</button>
+                <button type="button" class="btn btn-primary" @click="back">メニューに戻る</button>
+            </p>
+
+            <!-- <p><B>{{ text }}</B></p> -->
 
         </div>
 

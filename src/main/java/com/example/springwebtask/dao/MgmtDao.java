@@ -48,6 +48,16 @@ public class MgmtDao implements ManagementDao {
     }
 
     @Override
+    public Product findByProduct(String id) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        param.addValue("id", id);
+        List<Product> list = jdbcTemplate.query("SELECT id, product_id, category_id AS category, name, price, " +
+                "image_path, description, created_rd, created_ud FROM products WHERE product_id = :id", param,
+                new DataClassRowMapper<>(Product.class));
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
     public List<CategoryRecord> findCategories() {
         return jdbcTemplate.query("SELECT id, name, created_rd, created_ud FROM categories", new DataClassRowMapper<>(CategoryRecord.class));
     }
@@ -73,4 +83,45 @@ public class MgmtDao implements ManagementDao {
                 "VALUES(:id, :categoryId, :name, :price, :img, :description, now(), now())", param);
 
     }
+
+    @Override
+    public int update(Product productUpdate) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        param.addValue("category", productUpdate.getCategory());
+
+        Integer categoryId = jdbcTemplate.queryForObject("SELECT id FROM categories WHERE name = :category", param, Integer.class);
+        //System.out.println(categoryId);
+
+        param = new MapSqlParameterSource();
+        param.addValue("id", productUpdate.getId());
+        param.addValue("productId", productUpdate.getProductId());
+        param.addValue("name", productUpdate.getName());
+        param.addValue("categoryId", categoryId);
+        param.addValue("price", productUpdate.getPrice());
+        param.addValue("description", productUpdate.getDescription());
+        param.addValue("img", productUpdate.getimagePath());
+
+        return jdbcTemplate.update("UPDATE products SET product_id = :productId, category_id = :categoryId, name = :name, price = :price, " +
+                "image_path = :img, description = :description WHERE id = :id", param);
+    }
+
+    @Override
+    public Product findByProduct(Integer id, String productId) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        //System.out.println(id);
+        param.addValue("id", id);
+        param.addValue("productId", productId);
+        List<Product> list = jdbcTemplate.query("SELECT id, product_id, category_id AS category, name, price, " +
+                        "image_path, description, created_rd, created_ud FROM products WHERE id <> :id AND product_id = :productId",
+                        param, new DataClassRowMapper<>(Product.class));
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
+    public int delete(String productId) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        param.addValue("productId", productId);
+        return jdbcTemplate.update("DELETE FROM products WHERE product_id = :productId", param);
+    }
+
 }

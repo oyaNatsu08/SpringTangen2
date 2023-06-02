@@ -1,24 +1,61 @@
 .error {
     color: red;
 }
+
 .a-tag {
     text-decoration: none;
     color: inherit;
 }
+
 .a-tag:hover {
     color: inherit;
 }
 
 table {
-        border-collapse: collapse; /* セルの境界線を結合して1本の線にする */
-        border: 1px solid black; /* テーブル全体の枠線を追加 */
+    border-collapse: collapse;
+    /* セルの境界線を結合して1本の線にする */
+    border: 1px solid black;
+    /* テーブル全体の枠線を追加 */
 }
 
-th, td {
-    border: 1px solid black; /* セルの枠線を追加 */
-    padding: 8px; /* セルの内側の余白を設定（任意の値に変更可能） */
+th,
+td {
+    border: 1px solid black;
+    /* セルの枠線を追加 */
+    padding: 8px;
+    /* セルの内側の余白を設定（任意の値に変更可能） */
 }
 
 .red {
     color: red;
+}
+
+.center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.all {
+    background-color: lavender;
+}
+
+.login-form {
+    width: 400px;
+    height: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.border-login {
+    border-radius: 10px;
+}
+
+.margin {
+    margin-left: 10%;
+    margin-right: 10%;
 }
